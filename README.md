@@ -35,3 +35,14 @@ This application uses a multi-agent RAG (Retrieval Augmented Generation) archite
 - **SQL Agent**: Queries structured metadata (counts, dates, etc.).
 - **Viz Agent**: Generates Plotly charts.
 - **Synthesis Agent**: Combines all insights into a final answer.
+
+## Author
+
+**Yves Zango**  
+Developed as a demonstration of advanced RAG & Agentic AI architectures.  
+[LinkedIn](https://www.linkedin.com/in/yves-zango/) | [GitHub](https://github.com/tayvesz)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Data used is from [ISO Open Data](https://www.iso.org/open-data.html) licensed under ODC-By 1.0.
