@@ -14,4 +14,4 @@ DOMAIN = "international standardization"
 
 # Model settings (using Groq as per spec, though user key must be provided)
 # Ensure you have GROQ_API_KEY in your environment variables.
-GROQ_MODEL = "llama-3.3-70b-versatile" 
+GROQ_MODEL = "qwen/qwen3-32b" 

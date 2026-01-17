@@ -49,7 +49,13 @@ class RAGAgent:
             model=config.GROQ_MODEL,
         )
         
+        response = completion.choices[0].message.content
+        
+        # Clean up thinking blocks from Qwen3 (e.g., <think>...</think>)
+        import re
+        response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL).strip()
+        
         return {
-            "response": completion.choices[0].message.content,
+            "response": response,
             "source_documents": docs
         }

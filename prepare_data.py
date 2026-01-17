@@ -274,9 +274,29 @@ def create_sqlite_db(df_standards):
     if Path(committees_path).exists():
         try:
             df_committees = pd.read_parquet(committees_path)
-            # Extraction basique pour committees si nécessaire
-            df_committees.to_sql('committees', conn, if_exists='replace', index=False)
+            logger.info(f"Committees columns: {df_committees.columns.tolist()}")
+            
+            # --- Processing Committees ---
+            # 1. Extract Title
+            if 'title.en' in df_committees.columns:
+                df_committees['title_en'] = df_committees['title.en'].astype(str)
+            elif 'title' in df_committees.columns:
+                df_committees['title_en'] = df_committees['title'].apply(lambda x: extract_iso_map_regex(x, 'en'))
+            else:
+                df_committees['title_en'] = ''
+            
+            # 2. Extract ID (reference -> id)
+            if 'reference' in df_committees.columns:
+                df_committees['id'] = df_committees['reference']
+            
+            # Select simple columns for SQL
+            # We want: id, title_en, scope (optional)
+            comm_cols = ['id', 'reference', 'title_en']
+            final_comm_cols = [c for c in comm_cols if c in df_committees.columns]
+            
+            df_committees[final_comm_cols].to_sql('committees', conn, if_exists='replace', index=False)
             logger.info(f"✓ Committees table: {len(df_committees)} rows")
+            
         except Exception as e:
             logger.warning(f"Could not load committees: {e}")
     

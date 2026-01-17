@@ -31,11 +31,23 @@ class SQLAgent:
         
         generated_sql = completion.choices[0].message.content.strip()
         
+        # Clean up potential thinking blocks from Qwen3 (e.g., <think>...</think>)
+        import re
+        generated_sql = re.sub(r'<think>.*?</think>', '', generated_sql, flags=re.DOTALL).strip()
+        
         # Clean up potential markdown code blocks
         if "```sql" in generated_sql:
             generated_sql = generated_sql.split("```sql")[1].split("```")[0].strip()
         elif "```" in generated_sql:
-            generated_sql = generated_sql.split("```")[1].split("```")[0].strip()
+            parts = generated_sql.split("```")
+            if len(parts) >= 2:
+                generated_sql = parts[1].strip()
+        
+        # Remove any remaining HTML-like tags
+        generated_sql = re.sub(r'<[^>]+>', '', generated_sql).strip()
+        
+        # Remove any leading/trailing quotes that some models add
+        generated_sql = generated_sql.strip('"').strip("'")
             
         print(f"Generated SQL: {generated_sql}")
         

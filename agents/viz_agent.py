@@ -77,17 +77,24 @@ class VizAgent:
 
     def determine_chart_type(self, sql_query, dataframe):
         cols = dataframe.columns.str.lower()
+        query_lower = sql_query.lower()
         
         # 1. Timeline / Evolution
         if any(x in cols for x in ['year', 'publication_date', 'date']):
             return "timeline"
             
         # 2. Composition (Pie) - usually for status or few categories
-        if any(x in cols for x in ['status', 'type', 'stage']) and 'count' in cols:
-             return "pie"
+        if any(x in cols for x in ['status', 'type', 'stage']) and ('count' in cols or any('count' in c for c in cols)):
+             if len(dataframe) < 10: # Only pie if not too many segments
+                return "pie"
+        
+        # 3. Explicit keywords in query (e.g. from SQL)
+        if 'evolution' in query_lower or 'trend' in query_lower:
+             return "timeline"
              
-        # 3. Comparison (Bar) - Default for counts
-        if 'count' in cols:
+        # 4. Comparison (Bar) - Default for counts / rankings
+        # Check for count-like columns
+        if any(x in c for c in cols for x in ['count', 'total', 'num', 'nb']):
             return "bar"
             
         return "bar" # Fallback
