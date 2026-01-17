@@ -1,0 +1,14 @@
+pandas
+requests
+sentence-transformers
+numpy
+pyarrow
+streamlit
+plotly
+langchain
+langgraph
+xgboost
+scikit-learn
+groq
+python-dotenv
+tabulate
