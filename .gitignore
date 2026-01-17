@@ -14,14 +14,15 @@ env.bak/
 venv.bak/
 
 # Data and Database
+# Data and Database (Modified to ALLOW upload of pre-computed data)
 data/
-*.db
-*.sqlite3
-*.parquet
+# *.db (Removed to allow upload)
+# *.sqlite3 (Removed to allow upload)
+# *.parquet (Removed to allow upload)
 
 # Embeddings and generated files
-*.npy
-embeddings_ids.csv
+# *.npy (Removed to allow upload)
+# embeddings_ids.csv (Removed to allow upload)
 
 # IDEs
 .vscode/

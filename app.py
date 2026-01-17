@@ -13,25 +13,15 @@ load_dotenv()
 if "GROQ_API_KEY" in st.secrets:
     os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
-# --- Data Availability Check for Streamlit Cloud ---
 def check_and_prepare_data():
-    """Check if data files exist, prepare them if not (for cloud deployment)."""
+    """Check if data files exist (required for app to run)."""
     db_path = Path("iso_standards.db")
     embeddings_path = Path("embeddings.npy")
     
     if not db_path.exists() or not embeddings_path.exists():
-        st.warning("⚙️ **First-time setup**: Preparing ISO data... This may take a few minutes.")
-        with st.spinner("Downloading and processing ISO Open Data..."):
-            try:
-                # Import and run prepare_data
-                import prepare_data
-                prepare_data.main()
-                st.success("✅ Data preparation complete! Refreshing...")
-                st.rerun()
-            except Exception as e:
-                st.error(f"❌ Data preparation failed: {e}")
-                st.info("Please ensure you have internet access and try refreshing the page.")
-                st.stop()
+        st.error("❌ Vital data files missing (iso_standards.db or embeddings.npy).")
+        st.error("This app expects pre-computed data. Please ensure these files are committed to the repository.")
+        st.stop()
 
 # Run data check
 check_and_prepare_data()
