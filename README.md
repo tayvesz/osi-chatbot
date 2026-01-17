@@ -40,7 +40,7 @@ This application uses a multi-agent RAG (Retrieval Augmented Generation) archite
 
 **Yves Zango**  
 Developed as a demonstration of advanced RAG & Agentic AI architectures.  
-[LinkedIn](https://www.linkedin.com/in/yves-zango/) | [GitHub](https://github.com/tayvesz)
+[LinkedIn](https://www.linkedin.com/in/yves-t-a-z-4b7b7724/) | [GitHub](https://github.com/tayvesz)
 
 ## License
 
