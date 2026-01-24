@@ -9,3 +9,10 @@ font = "sans serif"
 headless = true
 enableCORS = false
 enableXsrfProtection = true
+maxUploadSize = 200
+
+[runner]
+magicEnabled = false
+
+[browser]
+gatherUsageStats = false
